@@ -17,6 +17,7 @@ router.get('/fetchnotes', fetchUser, async (req, res) => {
 });
 
 // ROUTE 2: Add new notes of the user: POST "/addnotes". Login required
+
 router.post('/addnotes', [
   body("title", "Enter a valid title").isLength({ min: 3 }),
   body("description", "Description must be at least 5 characters").isLength({ min: 5 }),
@@ -27,7 +28,7 @@ router.post('/addnotes', [
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
+// Create a new note
   try {
     const newNote = new Notes({
       title: req.body.title,
@@ -35,7 +36,7 @@ router.post('/addnotes', [
       tag: req.body.tag,
       user: req.user.id
     });
-//save the note to the database
+    //save the note to the database
     const savedNote = await newNote.save();
     res.json(savedNote);
   } catch (error) {
@@ -43,26 +44,59 @@ router.post('/addnotes', [
     res.status(500).json({ error: "Server error" });
   }
 });
-
-// ROUTE 3: Update an existing note: PUT "/updatenote". Login required
+// ROUTE 3: Update an existing note: PUT "/updatenote/:id" (Login required)
 router.put('/updatenote/:id', fetchUser, async (req, res) => {
-const { title, description, tag } = req.body;
+  try {
+    const { title, description, tag } = req.body;
 // Create a newNote object
-const newNote = {};
-if (title) { newNote.title = title };
-if (description) { newNote.description = description };
-if (tag) { newNote.tag = tag };
+    const updates = {};
+    if (title) updates.title = title;
+    if (description) updates.description = description;
+    if (tag) updates.tag = tag;
 
+    const note = await Notes.findById(req.params.id);
+// Check if the note is present or not
+    if (!note) {
+      return res.status(404).json({ error: 'Note not found' });
+    }
+// Allow updation only if user owns this note
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).json({ error: 'Not authorized' });
+    }
 // Find the note to be updated and update it
-// const note = await Notes.findByIdAndUpdate(req.params.id);
-let note = await Notes.findById({ _id: req.params.id });
-if (!note) { return res.status(404).send("Not Found") }
-
-if (note.user.toString() !== req.user.id) {
-  return res.status(401).send("Not Allowed");
-}
-note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true });
-res.json({ note });
+    const updatedNote = await Notes.findByIdAndUpdate(
+      req.params.id,
+      { $set: updates },
+      { new: true }
+    );
+// Return the updated note
+    res.json({ note: updatedNote });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
 });
 
-  module.exports = router;
+// ROUTE 4: Delete an existing note: DELETE "/deletenote/:id" (Login required)
+router.delete('/deletenote/:id', fetchUser, async (req, res) => {
+  try {
+    const note = await Notes.findById(req.params.id);
+// Check if the note is present or not
+    if (!note) {
+      return res.status(404).json({ error: 'Note not found' });
+    }
+// Allow deletion only if user owns this note
+    if (note.user.toString() !== req.user.id) {
+      return res.status(401).json({ error: 'Not authorized' });
+    }
+// Find the note to be deleted and delete it
+    await Notes.findByIdAndDelete(req.params.id);
+// Return the updated note
+    res.json({ success: 'Note has been deleted' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+module.exports = router;
