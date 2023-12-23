@@ -24,7 +24,7 @@ const NoteState = (props) => {
       }
     } catch (error) {
       console.error("Error fetching notes:", error);
-    }
+    } 
   };
 
   // Add a note function 
@@ -58,7 +58,7 @@ const NoteState = (props) => {
     });
     const json = response.json();
     console.log(json);
-    
+    //
     const newNotes = notes.filter((note) => note._id !== id);
     setNotes(newNotes);
   };
