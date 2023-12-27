@@ -46,6 +46,8 @@ const NoteState = (props) => {
       console.error("Error adding note:", error);
     }
   };
+  // const json = await response.json();
+  // console.log(json);
 
   // Delete a note 
   const deleteNote = async (id) => {
@@ -67,7 +69,7 @@ const NoteState = (props) => {
   const editNote = async (id, title, description, tag) => {
     try {
       const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjUxN2YxNTk2MWVhOWZmNzllMjNkMWRiIn0sImlhdCI6MTY5NjE1NTU1Mn0.pdilUq_bQBcMcMMpbnkNDhUJjAaMQki5FHk5XPHB-4U",
