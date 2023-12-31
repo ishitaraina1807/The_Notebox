@@ -98,7 +98,7 @@ const handleclick = (e) => {
         {Array.isArray(notes) && notes.length > 0 ? (
           notes.map((note) => <NoteItem key={note.id} updateNote={updateNote} note={note} />)
         ) : (
-          <p>No notes found</p>
+          <p className='mx-1'>No notes found</p>
         )}
       </div>
     </>
