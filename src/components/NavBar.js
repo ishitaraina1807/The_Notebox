@@ -14,12 +14,16 @@ const NavBar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className={`nav-link ${location.pathname==="/" ? "active": ""}`} to="/">Home</Link>
+              <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className={`nav-link ${location.pathname==="/about" ? "active": ""}`} to="/about">About</Link>
+              <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">About</Link>
             </li>
           </ul>
+        </div>
+        <div className="d-flex mx-5">
+          <Link to="/login" className="btn btn-light mx-2">Login</Link>
+          <Link to="/signup" className="btn btn-light mx-2">SignUp</Link>
         </div>
       </nav>
     </div>
