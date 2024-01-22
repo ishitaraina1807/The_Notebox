@@ -1,8 +1,16 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
+  const navigate = useNavigate();
   let location = useLocation();
+  const token = localStorage.getItem('token');
+
+  const Logout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  }
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -21,9 +29,21 @@ const NavBar = () => {
             </li>
           </ul>
         </div>
+
         <div className="d-flex mx-5">
-          <Link to="/login" className="btn btn-light mx-2">Login</Link>
-          <Link to="/signup" className="btn btn-light mx-2">SignUp</Link>
+          {token ? (
+            // Render logout button or user profile link if logged in
+            <>
+               <Link to="/login" onClick={Logout} className="btn btn-light mx-2">Logout</Link>
+              {/* Add a link to the user profile or other authenticated pages */}
+            </>
+          ) : (
+            // Render login and signup buttons if not logged in
+            <>
+              <Link to="/login" className="btn btn-light mx-2">Login</Link>
+              <Link to="/signup" className="btn btn-light mx-2">SignUp</Link>
+            </>
+          )}
         </div>
       </nav>
     </div>
