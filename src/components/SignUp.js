@@ -55,6 +55,7 @@ const SignUp = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <h1>Sign up to Notebox</h1>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">
           Enter Your Name

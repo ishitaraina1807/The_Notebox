@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -16,8 +17,10 @@ const Login = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Login form submitted');
-    
+
     try {
+      setLoading(true);
+
       const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {
@@ -27,7 +30,6 @@ const Login = (props) => {
       });
 
       if (!response.ok) {
-        // Check for non-successful status codes (e.g., 401 Unauthorized)
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
@@ -35,22 +37,23 @@ const Login = (props) => {
       console.log('Response:', json);
 
       if (json.success) {
-        // Save the auth token and redirect
         localStorage.setItem('token', json.authToken);
-        navigate('/');
         props.showAlert('Logged In successfully', 'success');
+        navigate('/');
       } else {
         props.showAlert('Invalid Credentials', 'danger');
       }
     } catch (error) {
       console.error('Error during login:', error);
-      // Handle other errors (e.g., network issues)
-      props.showAlert('Invalid credentials', 'danger');
+      props.showAlert('Error during login', 'danger');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className='container mx-4 my-4'>
+      <h1>Login to Notebox</h1>
       <form onSubmit={handleSubmit}>
         <div className='mb-3'>
           <label htmlFor='email' className='form-label'>
@@ -63,6 +66,7 @@ const Login = (props) => {
             value={credentials.email}
             onChange={handleEmailChange}
             aria-describedby='emailHelp'
+            required
           />
         </div>
         <div className='mb-3'>
@@ -75,10 +79,11 @@ const Login = (props) => {
             onChange={handlePasswordChange}
             className='form-control'
             id='password'
+            required
           />
         </div>
-        <button type='submit' className='btn btn-light'>
-          Login
+        <button type='submit' className='btn btn-light' disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
     </div>
