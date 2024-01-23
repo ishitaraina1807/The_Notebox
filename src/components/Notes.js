@@ -45,10 +45,12 @@ const Notes = () => {
   return (
     <>
       <AddNote />
-      <div className="row my-3">
+      <div className="grid grid-cols-2 gap-4">
         <h2>Your Notes</h2>
         {Array.isArray(notes) && notes.length > 0 ? (
-          notes.map((note) => <NoteItem key={note.id} updateNote={updateNote} note={note} />)
+          notes.map((note) => (
+            <NoteItem key={note.id} updateNote={updateNote} note={note} />
+          ))
         ) : (
           <p className="mx-1">No notes found</p>
         )}

@@ -7,8 +7,8 @@ const NoteItem = (props) => {
   const { note, updateNote } = props;
 
   return (
-    <div className="col-md-3">
-      <div className="bg-white rounded-md shadow-md p-4 mt-4 w-1/4">
+    <div className="p-4">
+      <div className="bg-white rounded-md shadow-md p-4">
         <h5 className="text-xl text-black font-bold mb-2">{note.title}</h5>
         <h6 className="text-sm text-gray-500 mb-2">{note.tag}</h6>
         <p className="text-gray-700">{note.description}.</p>
