@@ -6,8 +6,8 @@ import Home from './components/Home';
 import About from './components/About';
 import NoteState from './context/notes/NoteState';
 import Alert from './components/Alert';
-import Login from './components/Login';
-import SignUp from './components/SignUp';
+import Login from './components/Auth/Login';
+import SignUp from './components/Auth/SignUp';
 
 function App() {
   const [alert, setAlert] = useState(null);

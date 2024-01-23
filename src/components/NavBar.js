@@ -3,51 +3,48 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  let location = useLocation();
+  const location = useLocation();
   const token = localStorage.getItem('token');
 
-  const Logout = () => {
+  const logout = () => {
     localStorage.removeItem('token');
     navigate('/login');
-  }
+  };
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <Link to="/" className="navbar-brand mx-5">NOTEBOX</Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} to="/">Home</Link>
-            </li>
-            <li className="nav-item">
-              <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">About</Link>
-            </li>
+    <nav className="bg-dark p-4">
+      <div className="container mx-auto flex items-center justify-between">
+        <Link to="/" className="text-white text-2xl font-bold">NOTEBOX</Link>
+        <div className="flex items-center space-x-4">
+          <ul className="flex items-center space-x-4">
+            <NavItem to="/" label="Home" currentPath={location.pathname} />
+            <NavItem to="/about" label="About" currentPath={location.pathname} />
           </ul>
+          <div className="flex items-center space-x-2">
+            {token ? (
+              <>
+                <button onClick={logout} className="btn btn-light">Logout</button>
+                {/* Add a link to the user profile or other authenticated pages */}
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="btn btn-light">Login</Link>
+                <Link to="/signup" className="btn btn-light">SignUp</Link>
+              </>
+            )}
+          </div>
         </div>
-
-        <div className="d-flex mx-5">
-          {token ? (
-            // Render logout button or user profile link if logged in
-            <>
-               <Link to="/login" onClick={Logout} className="btn btn-light mx-2">Logout</Link>
-              {/* Add a link to the user profile or other authenticated pages */}
-            </>
-          ) : (
-            // Render login and signup buttons if not logged in
-            <>
-              <Link to="/login" className="btn btn-light mx-2">Login</Link>
-              <Link to="/signup" className="btn btn-light mx-2">SignUp</Link>
-            </>
-          )}
-        </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 };
+
+const NavItem = ({ to, label, currentPath }) => (
+  <li>
+    <Link to={to} className={`text-white ${currentPath === to ? 'underline' : ''}`}>
+      {label}
+    </Link>
+  </li>
+);
 
 export default NavBar;
