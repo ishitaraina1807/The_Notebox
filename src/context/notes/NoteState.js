@@ -28,7 +28,7 @@ const NoteState = (props) => {
   };
 
   // Add a note function 
-  const addNote = async (title, description, tag) => {
+  const addNote = async (title, description, dueDate) => {
     try {
       const response = await fetch(`${host}/api/notes/addnotes`, {
         method: "POST",
@@ -36,7 +36,7 @@ const NoteState = (props) => {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token"),
         },
-        body: JSON.stringify({ title, description, tag }),
+        body: JSON.stringify({ title, description, dueDate }),
       });
       if (response.ok) {
         const newNote = await response.json();
@@ -66,7 +66,7 @@ const NoteState = (props) => {
   };
 
   // Edit a note
-  const editNote = async (id, title, description, tag) => {
+  const editNote = async (id, title, description, dueDate) => {
     try {
       const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
         method: "PUT",
@@ -74,11 +74,11 @@ const NoteState = (props) => {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("token")
         },
-        body: JSON.stringify({ title, description, tag }),
+        body: JSON.stringify({ title, description, dueDate }),
       });
       if (response.ok) {
         const updatedNotes = notes.map((note) =>
-          note._id === id ? { ...note, title, description, tag } : note
+          note._id === id ? { ...note, title, description, dueDate } : note
         );
         setNotes(updatedNotes);
       }
