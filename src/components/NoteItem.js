@@ -6,26 +6,34 @@ const NoteItem = (props) => {
   const { deleteNote } = context;
   const { note, updateNote } = props;
 
+  const getRandomColor = () => {
+    const predefinedColors = ['#ECEE81', '#8DDFCB', '#82A0D8', '#EDB7ED'];
+    const randomIndex = Math.floor(Math.random() * predefinedColors.length);
+    return predefinedColors[randomIndex];
+  };
+
+  const bgColor = getRandomColor();
+
   return (
-    <div className="p-4">
-      <div className="bg-white rounded-md shadow-md p-4">
-        <h5 className="text-xl text-black font-bold mb-2">{note.title}</h5>
-        <h6 className="text-sm text-gray-500 mb-2">{note.tag}</h6>
-        <p className="text-gray-700">{note.description}.</p>
-        <div className="flex mt-4">
+    // Remove the unnecessary div element
+      <div style={{ backgroundColor: bgColor }} className='p-4 rounded-lg mt-8'>
+        <h5 className="text-2xl text-gray-800 font-bold mb-2">{note.title}</h5>
+        <p className="text-xl text-gray-800">{note.description}.</p>
+        <h6 className="text-lg text-right font-semibold text-gray-700 mb-2">Due: {note.dueDate}</h6>
+        <div className="text-right mt-4">
           <i
-            className="fas fa-trash text-red-500 cursor-pointer mr-2"
+            className="fas fa-trash text-gray-800 cursor-pointer mr-4"
             onClick={() => {
               deleteNote(note._id);
             }}
           ></i>
           <i
-            className="fas fa-edit text-blue-500 cursor-pointer"
+            className="fas fa-edit text-gray-800 cursor-pointer"
             onClick={() => updateNote(note)}
           ></i>
         </div>
       </div>
-    </div>
+
   );
 };
 

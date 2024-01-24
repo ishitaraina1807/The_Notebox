@@ -23,18 +23,18 @@ const AuthForm = ({ formType, onSubmit }) => {
   };
 
   return (
-    <div className="container mx-auto my-4 max-w-md">
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h1 className="text-3xl font-semibold mb-4">{formType === 'login' ? 'Login' : 'Sign up'} to Notebox</h1>
+    <div className="mx-auto my-12 max-w-md">
+      <form onSubmit={handleSubmit} className="shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 className="text-3xl text-center gradient-text font-semibold mb-4">{formType === 'login' ? 'Login' : 'Sign up'} to Notebox</h1>
 
         {formType === 'signup' && (
           <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-600">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-200">
               Enter Your Name
             </label>
             <input
               type="text"
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full text-black border rounded-md"
               id="name"
               name="name"
               onChange={handleInputChange}
@@ -43,12 +43,12 @@ const AuthForm = ({ formType, onSubmit }) => {
         )}
 
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-200">
             Email address
           </label>
           <input
             type="email"
-            className="mt-1 p-2 w-full border rounded-md"
+            className="mt-1 text-black p-2 w-full border rounded-md"
             id="email"
             aria-describedby="emailHelp"
             name="email"
@@ -59,12 +59,12 @@ const AuthForm = ({ formType, onSubmit }) => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-600">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-200">
             Password
           </label>
           <input
             type="password"
-            className="mt-1 p-2 w-full border rounded-md"
+            className="mt-1 text-black p-2 w-full border rounded-md"
             id="password"
             name="password"
             onChange={handleInputChange}
@@ -74,12 +74,12 @@ const AuthForm = ({ formType, onSubmit }) => {
 
         {formType === 'signup' && (
           <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-600">
+            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200">
               Confirm Password
             </label>
             <input
               type="password"
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 text-black p-2 w-full border rounded-md"
               id="confirmPassword"
               name="confirmPassword"
               onChange={handleInputChange}
@@ -91,7 +91,7 @@ const AuthForm = ({ formType, onSubmit }) => {
 
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+          className="px-4 font-bold py-2 text-gray-800 rounded-lg bg-[#ECEE81] hover:bg-white transition"
         >
           {formType === 'login' ? 'Login' : 'Sign up'}
         </button>

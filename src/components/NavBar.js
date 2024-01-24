@@ -12,29 +12,28 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-dark p-4">
+    <nav className="bg-[#28231D] p-4">
       <div className="container mx-auto flex items-center justify-between">
-        <Link to="/" className="text-white text-2xl font-bold">NOTEBOX</Link>
+        <Link to="/" className="gradient-text text-3xl font-bold">NOTEBOX - Your notes in the cloud</Link>
         <div className="flex items-center space-x-4">
-          <ul className="flex items-center space-x-4">
-            <NavItem to="/" label="Home" currentPath={location.pathname} />
-            <NavItem to="/about" label="About" currentPath={location.pathname} />
+          <ul className="flex items-center text-lg space-x-4">
+            <NavItem className="text-[#EDB7ED]" to="/" label="Home" currentPath={location.pathname} />
+            <NavItem className="text-[#82A0D8]" to="/about" label="About" currentPath={location.pathname} />
           </ul>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center justify-center">
             {token ? (
               <>
-                <button onClick={logout} className="btn btn-light">Logout</button>
-                {/* Add a link to the user profile or other authenticated pages */}
+                <button onClick={logout} className="px-4 py-2 rounded-lg text-white m-0 bg-red-500 hover:bg-red-600 transition">Logout</button>
               </>
             ) : (
               <>
-                <Link to="/login" className="btn btn-light">Login</Link>
-                <Link to="/signup" className="btn btn-light">SignUp</Link>
+                <Link to="/login" className="px-4 font-bold py-2 rounded-l-xl text-white m-0 bg-[#82A0D8] hover:bg-black transition">Login</Link>
+                <Link to="/signup" className="px-4 font-bold py-2 text-gray-800 rounded-r-xl bg-[#8DDFCB] hover:bg-white transition">SignUp</Link>
               </>
             )}
+            </div>
           </div>
         </div>
-      </div>
     </nav>
   );
 };

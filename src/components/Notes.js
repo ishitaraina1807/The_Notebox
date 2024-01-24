@@ -19,14 +19,14 @@ const Notes = () => {
   }, []);
 
   const ref = useRef(null);
-  const [note, setNote] = useState({ id: '', etitle: '', edescription: '', etag: '' });
+  const [note, setNote] = useState({ id: '', etitle: '', edescription: '', edueDate: '' });
 
   const updateNote = (currentNote) => {
     setNote({
       id: currentNote._id,
       etitle: currentNote.title,
       edescription: currentNote.description,
-      etag: currentNote.tag,
+      edueDate: currentNote.dueDate,
     });
     // Open the modal
     ref.current.classList.remove('hidden');
@@ -37,7 +37,7 @@ const Notes = () => {
   };
 
   const handleclick = (e) => {
-    editNote(note.id, note.etitle, note.edescription, note.etag);
+    editNote(note.id, note.etitle, note.edescription, note.edueDate);
     // Close the modal
     ref.current.classList.add('hidden');
   };
@@ -45,8 +45,8 @@ const Notes = () => {
   return (
     <>
       <AddNote />
-      <div className="grid grid-cols-2 gap-4">
-        <h2>Your Notes</h2>
+      <h2 className='text-2xl mt-8 font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-blue-500 to-yellow-500'>Your Notes</h2>
+      <div className="grid grid-cols-4 gap-x-20">
         {Array.isArray(notes) && notes.length > 0 ? (
           notes.map((note) => (
             <NoteItem key={note.id} updateNote={updateNote} note={note} />
@@ -67,16 +67,16 @@ const Notes = () => {
             aria-modal="true"
             aria-labelledby="modal-title"
           >
-            <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div className="bg-[#28231D] px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
               <div className="container">
                 <div className="mb-3">
-                  <label htmlFor="etitle" className="form-label text-dark">
+                  <label htmlFor="etitle" className="block text-lg font-medium text-[#ECEE81]">
                     Title
                   </label>
                   <input
                     type="text"
                     value={note.etitle}
-                    className="form-control"
+                    className="mt-1 p-2 text-black w-full border rounded-md"
                     id="etitle"
                     name="etitle"
                     placeholder="Add a title.."
@@ -84,44 +84,44 @@ const Notes = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="edescription" className="form-label text-dark">
+                  <label htmlFor="edescription" className="block text-lg font-medium text-[#82A0D8]">
                     Description
                   </label>
                   <textarea
-                    className="form-control"
+                   className="mt-1 p-2 w-full text-black border rounded-md"
                     value={note.edescription}
                     id="edescription"
                     name="edescription"
-                    rows="3"
+                    rows="1"
                     onChange={onChange}
                   ></textarea>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="etag" className="form-label text-dark">
-                    Tag
+                  <label htmlFor="edueDate" className="block text-lg font-medium text-[#EDB7ED]">
+                    Due Date
                   </label>
                   <textarea
-                    className="form-control"
-                    value={note.etag}
-                    id="etag"
-                    name="etag"
+                    className="mt-1 p-2 text-black w-full border rounded-md"
+                    value={note.edueDate}
+                    id="edueDate"
+                    name="edueDate"
                     rows="1"
                     onChange={onChange}
                   ></textarea>
                 </div>
               </div>
             </div>
-            <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <div className="bg-[#28231D] px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
               <button
                 type="button"
-                className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-blue-500 border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 mr-2"
+                className="mx-4 max-w-sm bg-gradient-to-r from-indigo-500 via-pink-500 to-yellow-500 hover:from-indigo-600 hover:via-pink-600 hover:to-red-600 focus:outline-none text-white text-md uppercase font-bold shadow-md rounded-lg px-4 py-2"
                 onClick={handleclick}
               >
                 Update note
               </button>
               <button
                 type="button"
-                className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-gray-800 border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+                className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white hover:bg-red-300 bg-red-500 border border-transparent rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
                 onClick={() => ref.current.classList.add('hidden')}
               >
                 Close
