@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-const mongoURI = 'mongodb://127.0.0.1:27017/notes';  
+const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/notes';
 
 const connectToMongo = async () => {
   try {

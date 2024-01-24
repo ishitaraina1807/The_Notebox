@@ -77,7 +77,6 @@ const NoteState = (props) => {
         body: JSON.stringify({ title, description, tag }),
       });
       if (response.ok) {
-        const updatedNote = await response.json();
         const updatedNotes = notes.map((note) =>
           note._id === id ? { ...note, title, description, tag } : note
         );

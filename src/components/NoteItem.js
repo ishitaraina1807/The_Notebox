@@ -1,23 +1,40 @@
-import React, { useContext } from 'react'
-import noteContext from "../context/notes/noteContext";
+import React, { useContext } from 'react';
+import noteContext from '../context/notes/noteContext';
 
 const NoteItem = (props) => {
-    const context = useContext(noteContext);
-    const { deleteNote } = context;
-    const { note, updateNote } = props;
-    return (
-        <div className='col-md-3'>
-            <div className="card wrap mt-4">
-                <div className="card-body">
-                    <h5 className="card-title">{note.title}</h5>
-                    <h6 className="card-subtitle mb-2 text-body-secondary"> {note.tag}</h6>
-                    <p className="card-text"> {note.description}.</p>
-                    <i className="fa-solid fa-trash mx-2" onClick={()=>{deleteNote(note._id)}}></i>
-                    <i className="fa-solid fa-pen-to-square mx-2" onClick={() => updateNote(note)}></i>
-                </div>
-            </div>
-        </div>
-    )
-}
+  const context = useContext(noteContext);
+  const { deleteNote } = context;
+  const { note, updateNote } = props;
 
-export default NoteItem
+  const getRandomColor = () => {
+    const predefinedColors = ['#ECEE81', '#8DDFCB', '#82A0D8', '#EDB7ED'];
+    const randomIndex = Math.floor(Math.random() * predefinedColors.length);
+    return predefinedColors[randomIndex];
+  };
+
+  const bgColor = getRandomColor();
+
+  return (
+    // Remove the unnecessary div element
+      <div style={{ backgroundColor: bgColor }} className='p-4 rounded-lg mt-8'>
+        <h5 className="text-2xl text-gray-800 font-bold mb-2">{note.title}</h5>
+        <p className="text-xl text-gray-800">{note.description}.</p>
+        <h6 className="text-lg text-right font-semibold text-gray-700 mb-2">Due: {note.dueDate}</h6>
+        <div className="text-right mt-4">
+          <i
+            className="fas fa-trash text-gray-800 cursor-pointer mr-4"
+            onClick={() => {
+              deleteNote(note._id);
+            }}
+          ></i>
+          <i
+            className="fas fa-edit text-gray-800 cursor-pointer"
+            onClick={() => updateNote(note)}
+          ></i>
+        </div>
+      </div>
+
+  );
+};
+
+export default NoteItem;

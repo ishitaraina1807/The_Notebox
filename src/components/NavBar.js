@@ -3,51 +3,47 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const NavBar = () => {
   const navigate = useNavigate();
-  let location = useLocation();
+  const location = useLocation();
   const token = localStorage.getItem('token');
 
-  const Logout = () => {
+  const logout = () => {
     localStorage.removeItem('token');
     navigate('/login');
-  }
+  };
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <Link to="/" className="navbar-brand mx-5">NOTEBOX</Link>
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} to="/">Home</Link>
-            </li>
-            <li className="nav-item">
-              <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}`} to="/about">About</Link>
-            </li>
+    <nav className="bg-[#28231D] p-4">
+      <div className="container mx-auto flex items-center justify-between">
+        <Link to="/" className="gradient-text text-3xl font-bold">NOTEBOX - Your notes in the cloud</Link>
+        <div className="flex items-center space-x-4">
+          <ul className="flex items-center text-lg space-x-4">
+            <NavItem className="text-[#EDB7ED]" to="/" label="Home" currentPath={location.pathname} />
+            <NavItem className="text-[#82A0D8]" to="/about" label="About" currentPath={location.pathname} />
           </ul>
+          <div className="flex items-center justify-center">
+            {token ? (
+              <>
+                <button onClick={logout} className="px-4 py-2 rounded-lg text-white m-0 bg-red-500 hover:bg-red-600 transition">Logout</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="px-4 font-bold py-2 rounded-l-xl text-white m-0 bg-[#82A0D8] hover:bg-black transition">Login</Link>
+                <Link to="/signup" className="px-4 font-bold py-2 text-gray-800 rounded-r-xl bg-[#8DDFCB] hover:bg-white transition">SignUp</Link>
+              </>
+            )}
+            </div>
+          </div>
         </div>
-
-        <div className="d-flex mx-5">
-          {token ? (
-            // Render logout button or user profile link if logged in
-            <>
-               <Link to="/login" onClick={Logout} className="btn btn-light mx-2">Logout</Link>
-              {/* Add a link to the user profile or other authenticated pages */}
-            </>
-          ) : (
-            // Render login and signup buttons if not logged in
-            <>
-              <Link to="/login" className="btn btn-light mx-2">Login</Link>
-              <Link to="/signup" className="btn btn-light mx-2">SignUp</Link>
-            </>
-          )}
-        </div>
-      </nav>
-    </div>
+    </nav>
   );
 };
+
+const NavItem = ({ to, label, currentPath }) => (
+  <li>
+    <Link to={to} className={`text-white ${currentPath === to ? 'underline' : ''}`}>
+      {label}
+    </Link>
+  </li>
+);
 
 export default NavBar;
