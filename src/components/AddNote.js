@@ -23,7 +23,7 @@ const AddNote = () => {
   };
 
   return (
-    <div className="container my-3">
+    <div className="my-1 lg:my-3">
      <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-300 via-blue-500 to-yellow-500">Add a Note</h1>
       <div className="my-4">
         <label htmlFor="title" className="block text-lg font-medium text-gray-200">

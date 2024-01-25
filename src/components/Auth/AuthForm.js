@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AuthForm = ({ formType, onSubmit }) => {
   const [credentials, setCredentials] = useState({
@@ -95,6 +96,12 @@ const AuthForm = ({ formType, onSubmit }) => {
         >
           {formType === 'login' ? 'Login' : 'Sign up'}
         </button>
+        <div className='flex gap-2 mt-2'>
+          <p className='text-gray-400'>{formType === 'login' ? "Don't have an accoun1?" : 'Already Have an account? '}</p>
+          <Link to={formType === 'login' ? '/signup' : '/login'} className='text-gray-200 hover:cursor-pointer'>
+            {formType === 'login' ? 'Sign up' : 'Login'}
+          </Link>
+        </div>
       </form>
     </div>
   );
