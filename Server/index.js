@@ -7,7 +7,7 @@ const cors = require('cors');
 
 app.use(cors(
   {
-      origin: ["https://notebox-one.vercel.app/"],
+      origin: ["https://notebox-one.vercel.app"],
       methods: ["POST", "GET"],
       credentials: true
   }
