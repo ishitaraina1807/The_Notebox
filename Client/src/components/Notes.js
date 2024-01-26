@@ -46,7 +46,7 @@ const Notes = () => {
     <>
       <AddNote />
       <h2 className='text-2xl mt-8 font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-blue-500 to-yellow-500'>Your Notes</h2>
-      <div className="grid grid-cols-4 gap-x-20">
+      <div className="grid xl:grid-cols-4 md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-x-20">
         {Array.isArray(notes) && notes.length > 0 ? (
           notes.map((note) => (
             <NoteItem key={note.id} updateNote={updateNote} note={note} />
