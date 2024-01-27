@@ -6,7 +6,7 @@ const Login = (props) => {
     console.log('Login form submitted');
 
     try {
-      const response = await fetch('https://notebox-backend-1254ygqeh-ishitaraina1807.vercel.app/api/auth/login', {
+      const response = await fetch('https://notebox-backend.vercel.app/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
