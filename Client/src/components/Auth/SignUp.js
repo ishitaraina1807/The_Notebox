@@ -11,7 +11,7 @@ const SignUp = (props) => {
         throw new Error("Passwords don't match");
       }
 
-      const response = await fetch('https://notebox-backend.vercel.app/api/auth/createuser', {
+      const response = await fetch('https://notebox-backend-1254ygqeh-ishitaraina1807.vercel.app/api/auth/createuser', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
